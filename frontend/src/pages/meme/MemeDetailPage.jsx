@@ -11,12 +11,10 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import { likeMeme, commentOnMeme, tipMeme, voteOnMeme } from "../../contractAPI"; // Adjust the import path as needed
 import { ethers } from "ethers";
-// import { WalletTgSdk } from "@uxuycom/web3-tg-sdk";
+import { useWeb3Auth } from "../../web3AuthProvider"; // Adjust the import path as needed
 
 let isInjected = localStorage.getItem("__isInjected");
-// const walletTgSdk = new WalletTgSdk({ injected: !!isInjected });
-// const ethereum = isInjected ? window.ethereum : walletTgSdk.ethereum;
-const ethereum =  window.ethereum ;
+
 
 const MemeDetailPage = () => {
   const [liked, setLiked] = useState(false);
@@ -30,6 +28,10 @@ const MemeDetailPage = () => {
   const location = useLocation();
   const { projectData } = location.state || {};
   const currentUser = "Horlarmmy"; // Replace with the actual user
+  // Access Web3Auth context
+  const {
+    provider
+  } = useWeb3Auth();
 
   useEffect(() => {
     if (projectData) {
@@ -79,8 +81,8 @@ const MemeDetailPage = () => {
   const handleTip = async () => {
     if (tipAmount && !isNaN(tipAmount)) {
       try {
-        const provider = new ethers.BrowserProvider(ethereum);
-        const signer = await provider.getSigner();
+        const ethersProvider = new ethers.BrowserProvider(provider);
+        const signer = await ethersProvider.getSigner();
         await tipMeme(signer, assetId, chainId, parseFloat(tipAmount));
         console.log("Tip sent:", tipAmount);
         setTipAmount("");

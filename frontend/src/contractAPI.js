@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ethers } from "ethers";
 import abi from "./MemeRealms.json";
 
-const contractAddress = "0x633945C363c5caBABea7481339DA1bb56Ff0597D";
+const contractAddress = "0xF244E57e653B581224780Ac2665386cC3C1C16b1";
 
 export async function getContract(signer) {
   return new ethers.Contract(contractAddress, abi, signer);
@@ -10,7 +10,7 @@ export async function getContract(signer) {
 
 export async function createMeme(signer, formData) {
   const { name, description, createdBy, image } = formData;
-  const imgUrl = 'https://i.redd.it/ke53iac4gg331.jpg';
+  const imgUrl = 'https://i.pinimg.com/originals/0a/bb/e5/0abbe546e479edc1eb62f5a8ccd66328.jpg';
   const contract = await getContract(signer);
 
   try {

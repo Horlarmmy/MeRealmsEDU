@@ -3,11 +3,10 @@ import PropTypes from "prop-types";
 // import { WalletTgSdk } from "@uxuycom/web3-tg-sdk";
 import { ethers } from "ethers";
 import { createMeme } from "../contractAPI";
+import { useWeb3Auth } from "../web3AuthProvider";
 
 
 let isInjected = localStorage.getItem("__isInjected");
-// const walletTgSdk = new WalletTgSdk({ injected: !!isInjected });
-const ethereum =  window.ethereum ;
 
 const ModalForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -19,6 +18,11 @@ const ModalForm = ({ onClose }) => {
   });
 
   const modalRef = useRef(null);
+
+  // Access Web3Auth context
+  const {
+    provider
+  } = useWeb3Auth();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -44,8 +48,10 @@ const ModalForm = ({ onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const provider = new ethers.BrowserProvider(ethereum);
-    const signer = await provider.getSigner();
+    const ethersProvider = new ethers.BrowserProvider(provider);
+    const signer = await ethersProvider.getSigner();
+    const address = await signer.getAddress();
+    console.log("User Address:", address);
     console.log("Form Data Submitted:", formData);
     await createMeme(signer, formData);
     // Perform submission logic here
