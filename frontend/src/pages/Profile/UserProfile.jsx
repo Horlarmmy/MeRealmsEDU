@@ -15,9 +15,9 @@ const UserProfilePage = () => {
 
   const userData = {
     username: "memeMaster",
-    walletAddress: walletAddress
-      ? shortenAddress(walletAddress)
-      : "Connect Wallet",
+    // walletAddress: walletAddress
+    //   ? shortenAddress(walletAddress)
+    //   : "Connect Wallet",
     totalMemes: 42,
     totalVotes: 156,
   };
@@ -37,7 +37,7 @@ const UserProfilePage = () => {
             <div className="flex items-center gap-2 text-gray-400">
               <span>{userData.walletAddress}</span>
               <button
-                onClick={() => copyToClipboard(walletAddress)}
+                // onClick={() => copyToClipboard(walletAddress)}
                 className="hover:text-white transition-colors"
               >
                 <Copy className="w-4 h-4" />

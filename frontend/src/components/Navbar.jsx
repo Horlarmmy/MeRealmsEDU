@@ -1,5 +1,5 @@
 // NavBar.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { LogOut, CircleUserRound } from "lucide-react";
@@ -7,19 +7,13 @@ import { toast } from "react-toastify";
 import { useWeb3Auth } from "../web3AuthProvider"; // Update path as needed
 import RPC from "../ethersRPC"; // Ensure this file exists or replace it with your own RPC implementation
 
-
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
   const navigate = useNavigate();
 
   // Access Web3Auth context
-  const {
-    provider,
-    loggedIn,
-    login,
-    logout,
-    getUserInfo,
-  } = useWeb3Auth();
+  const { provider, loggedIn, login, logout, getUserInfo } = useWeb3Auth();
 
   // UI Console for logging outputs
   const uiConsole = (...args) => {
@@ -51,6 +45,7 @@ const NavBar = () => {
   };
 
   // Get Ethereum accounts
+
   const getAccounts = async () => {
     if (!provider) {
       uiConsole("Provider not initialized yet.");
@@ -58,11 +53,14 @@ const NavBar = () => {
     }
     try {
       const accounts = await RPC.getAccounts(provider);
+      setWalletAddress(accounts);
       uiConsole(accounts);
     } catch (error) {
       uiConsole("Error fetching accounts:", error.message);
     }
   };
+
+  getAccounts();
 
   // Get wallet balance
   const getBalance = async () => {
@@ -176,7 +174,8 @@ const NavBar = () => {
                 // onClick={() => copyToClipboard(walletAddress)}
                 className="bg-[#4885e7] transition-colors duration-200 text-white px-4 py-3 text-md rounded-md hover:bg-[#4782E0]"
               >
-                {/* {walletAddress?.slice(0, 8)}...{walletAddress?.slice(-5)} */}Welcome
+                {/* {walletAddress?.slice(0, 8)}...{walletAddress?.slice(-5)} */}
+                Welcome
               </button>
               <motion.div whileHover={{ scale: 1.1 }}>
                 <LogOut
