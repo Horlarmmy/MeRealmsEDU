@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import SingleFeatures from "./SingleFeatures";
 // import { WalletTgSdk } from "@uxuycom/web3-tg-sdk";
 import { ethers } from "ethers";
-import { getMemes } from "../../contractAPI";
+import { getMemes, getUserMeme } from "../../contractAPI";
 
 
 
@@ -36,6 +36,8 @@ const Feature = () => {
         // const provider = new ethers.BrowserProvider(ethereum);
         // const signer = await provider.getSigner();
         const memes = await getMemes();
+        const userMeme = await getUserMeme("Horlarmmy");
+        console.log(userMeme);
         console.log(memes)
         setTokens(memes);
       } catch (error) {
@@ -46,7 +48,7 @@ const Feature = () => {
     };
 
     fetchTokens();
-  }, []); // Remove tokens from the dependency array
+  }, []);
 
   // Filter tokens by selected category and duration
   const filteredTokens = tokens.filter(

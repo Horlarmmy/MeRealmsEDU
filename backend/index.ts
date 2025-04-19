@@ -223,6 +223,22 @@ async function startServer() {
       }
     });
 
+    // Get all Meme by user
+    app.get("/memes/user/:username", async (req: Request, res: Response) => {
+      const { username } = req.params;
+
+      try {
+        const memes = await db
+          .collection(memesCollection)
+          .find({ createdBy: username })
+          .toArray();
+        res.status(200).json(memes);
+      } catch (error) {
+        console.error("Error fetching memes by user:", error);
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);

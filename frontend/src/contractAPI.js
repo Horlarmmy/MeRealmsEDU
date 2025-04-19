@@ -116,6 +116,17 @@ export async function tipMeme(signer, memeId, chainId, amount) {
   }
 }
 
+export async function getUserMeme(userId) {
+  try {
+    const response = await axios.get(`http://localhost:3000/memes/user/${userId}`);
+    console.log("User memes fetched successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user memes:", error);
+    throw new Error("Failed to fetch user memes");
+  }
+}
+
 export async function updateProfile() {
   // Update user profile
 }
