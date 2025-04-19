@@ -99,7 +99,7 @@ async function startServer() {
           desc,
           createdBy,
           imgUrl,
-          chain_id: Number(memeCount) - 1,
+          chain_id: Number(memeCount),
           likes: [],
           tips: 0,
           comments: [],

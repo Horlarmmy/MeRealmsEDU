@@ -83,6 +83,7 @@ const MemeDetailPage = () => {
       try {
         const ethersProvider = new ethers.BrowserProvider(provider);
         const signer = await ethersProvider.getSigner();
+        console.log(assetId, chainId, parseFloat(tipAmount));
         await tipMeme(signer, assetId, chainId, parseFloat(tipAmount));
         console.log("Tip sent:", tipAmount);
         setTipAmount("");
