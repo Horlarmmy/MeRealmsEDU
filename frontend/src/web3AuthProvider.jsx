@@ -1,13 +1,13 @@
 // Web3AuthProvider.js
 import { createContext, useContext, useState, useEffect } from "react";
-import {  WEB3AUTH_NETWORK } from "@web3auth/base";
+import { WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/modal";
 // import { getDefaultExternalAdapters } from "@web3auth/default-evm-adapter";
 
-
 // Get your clientId from Web3Auth dashboard
-const clientId = "BBAfS-R4JfRNNRnh6OyIKrntJ2lI8WyyTUoSL65gfiICus8UFlML3B_IMErJME0jQFrX0exheP1F13WbqO-KqRY";
+const clientId =
+  "BBAfS-R4JfRNNRnh6OyIKrntJ2lI8WyyTUoSL65gfiICus8UFlML3B_IMErJME0jQFrX0exheP1F13WbqO-KqRY";
 
 const chainConfig = {
   chainNamespace: "eip155",
@@ -17,10 +17,10 @@ const chainConfig = {
   blockExplorer: "https://opencampus-codex.blockscout.com/",
   ticker: "EDU",
   tickerName: "EDU",
-}
+};
 
 const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: {chainConfig}
+  config: { chainConfig },
 });
 
 const web3AuthOptions = {
